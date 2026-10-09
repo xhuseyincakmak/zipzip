@@ -1,0 +1,17 @@
+name: Lav Kapısı
+theme: stone
+background: cave
+time: 350
+---
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                                                                            XXXXXXXXXXXXXXXXX
+                                                                            XXXXXXXXXXXXXXXXX
+                                                                            XXXXXXXXXXXXXXXXX
+                                                                            XXXXXXXXXXXXXXXXX
+                                                                                                                                       E
+         ?M?                                        BB*BB                                                 A                        XXXXXXXXX
+                                  oooo    XX                                  ooooooooooooo                                       XXXXXXXXXXX
+                                          XX                                                      =                              XXXXXXXXXXXXX
+   S                      E  E            XX    K                 C     W       E   E   E                       K               XXXXXXXXXXXXXXX                       F
+##################LLL#############LLLL####################LLLL##################################LLLLL#################LLLL##########################################################
+##################LLL#############LLLL####################LLLL##################################LLLLL#################LLLL##########################################################

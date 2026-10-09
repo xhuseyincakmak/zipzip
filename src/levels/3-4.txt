@@ -1,0 +1,17 @@
+name: Yıldız Kulesi
+theme: snow
+background: trees
+time: 300
+---
+
+
+                                                                                                                                                       X
+                                                                                                                                                      XX
+                                                                                oooooooooo                      A                                    XXX
+                      W                                                                                                                             XXXX
+        ?M?        XXXXXXXX                     B*BB?B                             W                        A                 ?B?B?                XXXXX
+                  XXXXXXXXXX             Y                                    XXXXXXXXXXXXXX                                                      XXXXXX
+                 XXXXXXXXXXXX                                                XXXXXXXXXXXXXXXX      =                                             XXXXXXX
+   S            XXXXXXXXXXXXXX    E E                   W       K     C     XXXXXXXXXXXXXXXXXX                        E E E           W         XXXXXXXX                  F
+########################################    #####################################################     ################################################################################
+########################################    #####################################################     ################################################################################

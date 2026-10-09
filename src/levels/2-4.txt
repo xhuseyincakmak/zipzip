@@ -1,0 +1,17 @@
+name: Diken Tüneli
+theme: stone
+background: cave
+time: 300
+---
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+                                                                                  A                             ooooo
+                oooo
+                                                      oooooo                               o
+        ?M?     ####                                                  BB*BB                                    |                          A        X
+                                            A         =                                 X    X                                                    XX
+                                                                                       XX    XX                                                  XXX
+   S           X^^^^X     E   W                 K     ^^^^^^      C     E E           XXX ^^^XXX    W     W     ^^^^^       K                   XXXX        E           F
+####################################    ########################################     #############################################    ##############################################
+####################################    ########################################     #############################################    ##############################################

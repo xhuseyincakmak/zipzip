@@ -1,0 +1,17 @@
+name: Dev Slime'ın Kalesi
+theme: stone
+background: cave
+time: 400
+---
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                                                                                    X                                       G
+                                                                                    X                                       G
+                                                                                    X                                       G
+                                                                                    X                                       G
+                                                                                    X                                       G
+         M?M                    A                     B*B                           X                                       G
+                                                                                                                            G
+                                        =                                                                                   G
+   S                      W                       K         C     E E                                   Z                   G               F
+##################LLLL################LLLLLLLLL###########################LLLL##################################################################################################
+##################LLLL################LLLLLLLLL###########################LLLL##################################################################################################

@@ -1,0 +1,17 @@
+name: Erimiş Köprüler
+theme: stone
+background: cave
+time: 350
+---
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+                                                                                                                         A
+                                                                      Y
+         ?M      oooooooo               |               BB*BB                                    XX                                    X
+                                             Y                                              |                                         XX
+                  =                                              =                                                   =               XXX
+   S                          E E                   K                         C     W                   E E E                       XXXX        W                         F
+################LLLLLLLLLL############LLLLLLLLLL##############LLLLLLLLLLL#################LLLLLLLLLL##############LLLLLLLLLLL#########################################################
+################LLLLLLLLLL############LLLLLLLLLL##############LLLLLLLLLLL#################LLLLLLLLLL##############LLLLLLLLLLL#########################################################

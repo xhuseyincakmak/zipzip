@@ -1,0 +1,17 @@
+name: Mantar Tepeleri
+theme: grass
+background: mushrooms
+time: 300
+---
+                                                                                          ?
+
+                                                                                        ooooo
+                               ?      ooo                                                                             oooo
+                      oooo                                                         ooo  #####
+                             oooooo   ###  oooooo                                               ooooo         ooooo   ####
+         M     ooooo  ####      E             E                    B*B      oooo   ###            E             K            oooooo                  X######
+                             ######        ######   oooooo                                      #####   oooo  #####             E                   XX######
+               #####                                                        ####                                             ######                XXX######
+   S                                                ######       C     E                                ####                                E E   XXXX######    F
+#############                                               #############                                                             ####################################
+#############                                               #############                                                             ####################################

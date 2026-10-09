@@ -1,0 +1,17 @@
+name: Test Alanı
+theme: grass
+background: hills
+time: 300
+---
+
+
+                  *                                                                  ooo             X
+                                                                                     ###            XX
+             ooo                                                                                   XXX
+                                                                                                  XXXX
+            M   BBMBB   oooo              X  X        ##      oo                    b   E        XXXXX
+                        ####             XX  XX       ##      ##                  #########     XXXXXX
+                                        XXX  XXX      ##              BBBBBBBBB   #########    XXXXXXX
+   S   bb             E             K  XXXX  XXXX   E ## Eb       C m  ooooooo    ######### K XXXXXXXX bm F
+##############################   ############################    ###############################################
+##############################   ############################    ###############################################

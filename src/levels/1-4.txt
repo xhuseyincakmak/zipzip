@@ -1,0 +1,17 @@
+name: Taş Kale
+theme: stone
+background: hills
+time: 300
+---
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+                                                                                                              oooooo
+                                                                                                                                                         X
+                BBBBBBBB                                                            BBBBBBBBBBBB                 E                                      XX
+          ?M?                    K              BBB*BBB                                                      XXXXXXX       B?B?B                       XXX
+                              XXXXXX     ooo                  XX        XX                                  XXXXXXXX                                  XXXX
+                             XXXXXXXX                         XX                     oooooooooo            XXXXXXXXX                                 XXXXX
+   S               E  E     XXXXXXXXXX              E  E  E   XX   K            C       E  E  K           XXXXXXXXXX            E E E   K           XXXXXX         F
+#########################################   ###########################    #########################   #############    #####################   ################################
+#########################################   ###########################    #########################   #############    #####################   ################################

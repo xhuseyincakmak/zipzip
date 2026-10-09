@@ -1,0 +1,17 @@
+name: Testere Salonu
+theme: stone
+background: cave
+time: 350
+---
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+                                ooo
+                                                                                A                                                               X
+         M??                    XXX             W             B*B                                                 A                            XX
+                                              XXXXX                                                      =                                    XXX
+                                                                                                                                             XXXX
+   S              W       W     ^^^                     E E           C     W                 K     W     ^^^^                  W     E     XXXXX                     F
+########################################LLLL##########################################LLLL##############################LLLL########################################################
+########################################LLLL##########################################LLLL##############################LLLL########################################################
