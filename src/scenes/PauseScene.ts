@@ -5,6 +5,7 @@ import { MenuPad } from '../systems/Input';
 import { Music } from '../systems/Music';
 import { Settings } from '../systems/Settings';
 import { isTouchDevice } from '../systems/Touch';
+import { fullscreenAvailable, onActivate, onFullscreenChange, toggleFullscreen } from '../systems/Fullscreen';
 
 const FONT = 'system-ui, sans-serif';
 
@@ -34,10 +35,10 @@ export class PauseScene extends Phaser.Scene {
     this.pad = new MenuPad(this);
     this.add.rectangle(0, 0, GAME_WIDTH, GAME_HEIGHT, 0x111827, 0.7).setOrigin(0);
     this.add
-      .rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, 560, 440, 0xffffff, 0.95)
+      .rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, 560, 500, 0xffffff, 0.95)
       .setStrokeStyle(6, 0x1f2937);
     this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 170, 'DURAKLATILDI', {
+      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 195, 'DURAKLATILDI', {
         fontFamily: FONT,
         fontSize: '44px',
         fontStyle: '900',
@@ -69,10 +70,18 @@ export class PauseScene extends Phaser.Scene {
           Settings.save();
         },
       },
+      ...(fullscreenAvailable(this.game)
+        ? [
+            {
+              label: () => `Tam ekran: ${this.scale.isFullscreen ? 'Açık' : 'Kapalı'}`,
+              action: () => toggleFullscreen(this.game),
+            },
+          ]
+        : []),
     ];
     this.texts = this.items.map((_, i) =>
       this.add
-        .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 90 + i * 62, '', {
+        .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 125 + i * 56, '', {
           fontFamily: FONT,
           fontSize: '32px',
           fontStyle: 'bold',
@@ -82,13 +91,14 @@ export class PauseScene extends Phaser.Scene {
         .setInteractive({ useHandCursor: true }),
     );
     this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 190, isTouchDevice() ? 'Seçeneğe dokun' : '↑ ↓ seç   Enter / Space onayla   Esc devam', {
+      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 215, isTouchDevice() ? 'Seçeneğe dokun' : '↑ ↓ seç   Enter / Space onayla   Esc devam', {
         fontFamily: FONT,
         fontSize: '20px',
         color: '#6b7280',
       })
       .setOrigin(0.5);
     this.render();
+    onFullscreenChange(this, () => this.render());
 
     const kb = this.input.keyboard!;
     const move = (d: number) => {
@@ -101,7 +111,7 @@ export class PauseScene extends Phaser.Scene {
       if (this.scene.isActive()) this.render();
     };
     this.texts.forEach((t, i) =>
-      t.on('pointerdown', () => {
+      onActivate(t, () => {
         this.index = i;
         choose();
       }),

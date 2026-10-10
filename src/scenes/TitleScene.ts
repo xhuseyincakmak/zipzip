@@ -8,6 +8,7 @@ import { MenuPad } from '../systems/Input';
 import { Music } from '../systems/Music';
 import { Settings } from '../systems/Settings';
 import { isTouchDevice } from '../systems/Touch';
+import { addFullscreenButton, fullscreenAvailable, toggleFullscreen } from '../systems/Fullscreen';
 
 const FONT = 'system-ui, sans-serif';
 
@@ -53,7 +54,7 @@ export class TitleScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.add
-      .text(GAME_WIDTH - 16, GAME_HEIGHT - 12, (touch ? '' : 'E: bölüm editörü   M: müzik aç/kapat   N: kaydı sıfırla   •   ') + 'Grafik & ses efektleri: Kenney.nl (CC0)', {
+      .text(GAME_WIDTH - 16, GAME_HEIGHT - 12, (touch ? '' : 'E: bölüm editörü   M: müzik   F: tam ekran   N: kaydı sıfırla   •   ') + 'Grafik & ses efektleri: Kenney.nl (CC0)', {
         fontFamily: FONT,
         fontSize: '18px',
         color: '#ffffff',
@@ -71,15 +72,13 @@ export class TitleScene extends Phaser.Scene {
       this.scene.start('WorldMap');
     };
     // Fare/dokunma: boş bir yere dokununca başla. Telefonda tam ekran ve yatay kilit dene.
-    this.input.on('pointerup', (_p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => {
-      if (over.length) return;
-      if (touch && this.scale.fullscreen.available && !this.scale.isFullscreen) {
-        this.scale.startFullscreen();
-        const orientation = screen.orientation as ScreenOrientation & { lock?: (o: string) => Promise<void> };
-        orientation.lock?.('landscape').catch(() => {});
-      }
+    const tapStart = (p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[], up: boolean) => {
+      if (over.length || p.wasTouch !== up) return;
+      if (touch && fullscreenAvailable(this.game) && !this.scale.isFullscreen) toggleFullscreen(this.game);
       start();
-    });
+    };
+    this.input.on('pointerdown', (p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => tapStart(p, over, false));
+    this.input.on('pointerup', (p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => tapStart(p, over, true));
     const musicBtn = this.add
       .text(GAME_WIDTH - 16, 16, '', { fontFamily: FONT, fontSize: '24px', fontStyle: 'bold', color: '#ffffff', backgroundColor: '#1f2937', padding: { x: 14, y: 10 } })
       .setOrigin(1, 0)
@@ -93,6 +92,7 @@ export class TitleScene extends Phaser.Scene {
       refreshMusicBtn();
     };
     musicBtn.on('pointerdown', toggleMusic);
+    addFullscreenButton(this, GAME_WIDTH - 16, 100);
     kb.once('keydown-SPACE', start);
     kb.once('keydown-ENTER', start);
     kb.on('keydown-E', () => this.scene.start('Editor'));

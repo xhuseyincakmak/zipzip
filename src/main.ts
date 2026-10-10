@@ -8,6 +8,7 @@ import { EditorScene } from './scenes/EditorScene';
 import { PauseScene } from './scenes/PauseScene';
 import { TouchControlsScene } from './scenes/TouchControlsScene';
 import { WorldMapScene } from './scenes/WorldMapScene';
+import { installFullscreenKey } from './systems/Fullscreen';
 import { GameState } from './systems/GameState';
 import { Music } from './systems/Music';
 
@@ -28,6 +29,8 @@ const game = new Phaser.Game({
   input: { gamepad: true, activePointers: 4 },
   scene: [BootScene, TitleScene, WorldMapScene, GameScene, HUDScene, TouchControlsScene, PauseScene, EditorScene],
 });
+
+installFullscreenKey(game);
 
 // Geliştirme sırasında konsoldan erişim için.
 if (import.meta.env.DEV) Object.assign(window, { __game: game, __state: GameState, __music: Music });

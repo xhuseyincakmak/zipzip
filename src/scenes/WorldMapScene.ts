@@ -9,6 +9,7 @@ import { Save, type SaveData } from '../systems/Save';
 import { MenuPad } from '../systems/Input';
 import { Music } from '../systems/Music';
 import { isTouchDevice } from '../systems/Touch';
+import { addFullscreenButton } from '../systems/Fullscreen';
 
 const FONT = 'system-ui, sans-serif';
 const NODE_Y = 470;
@@ -114,7 +115,8 @@ export class WorldMapScene extends Phaser.Scene {
     button(56, NODE_Y, '◀', () => this.move(-1), 36);
     button(GAME_WIDTH - 56, NODE_Y, '▶', () => this.move(1), 36);
     button(GAME_WIDTH / 2, 600, '▶  OYNA', () => this.play(), 34, '#15803d');
-    button(GAME_WIDTH - 90, 28, 'Başlık', () => this.scene.start('Title'), 22);
+    const back = button(GAME_WIDTH - 16, 28, 'Başlık', () => this.scene.start('Title'), 22).setOrigin(1, 0.5);
+    addFullscreenButton(this, back.x - back.width - 10, 28)?.setPadding(14, 7);
   }
 
   /** Haritadaki bir bölüm düğmesine dokunuldu: seçiliyse oyna, değilse seç. */
