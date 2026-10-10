@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { TouchState } from './Touch';
 
 export interface InputState {
   left: boolean;
@@ -24,6 +25,7 @@ const PAD = { a: 0, b: 1, x: 2, start: 9, up: 12, down: 13, left: 14, right: 15 
 /**
  * Klavye: ok tuşları / WASD, zıplama Space-Z-Yukarı-W, koşma Shift-X, duraklat Esc-P.
  * Gamepad: sol çubuk / yön tuşları, A zıpla, X veya B koş/ateş, Start duraklat.
+ * Dokunmatik: TouchControlsScene'in ekrandaki tuşları (TouchState).
  */
 export class InputController {
   private left: Phaser.Input.Keyboard.Key[];
@@ -34,6 +36,7 @@ export class InputController {
   private jump: Phaser.Input.Keyboard.Key[];
   private pause: Phaser.Input.Keyboard.Key[];
   private prevPad = new Set<number>();
+  private prevTouch = { jump: false, run: false, pause: false };
 
   constructor(private scene: Phaser.Scene) {
     const kb = scene.input.keyboard!;
@@ -52,16 +55,24 @@ export class InputController {
     const any = (ks: Phaser.Input.Keyboard.Key[]) => ks.some((k) => k.isDown);
     const justDown = (ks: Phaser.Input.Keyboard.Key[]) => ks.some((k) => Phaser.Input.Keyboard.JustDown(k));
     const pad = this.readPad();
+    const t = TouchState;
+    const prev = this.prevTouch;
+    const touch = {
+      jumpPressed: t.jump && !prev.jump,
+      actionPressed: t.run && !prev.run,
+      pausePressed: t.pause && !prev.pause,
+    };
+    this.prevTouch = { jump: t.jump, run: t.run, pause: t.pause };
     return {
-      left: any(this.left) || pad.left,
-      right: any(this.right) || pad.right,
+      left: any(this.left) || pad.left || t.left,
+      right: any(this.right) || pad.right || t.right,
       up: any(this.up) || pad.up,
       down: any(this.down) || pad.down,
-      run: any(this.run) || pad.held(PAD.x) || pad.held(PAD.b),
-      jumpHeld: any(this.jump) || pad.held(PAD.a),
-      jumpPressed: justDown(this.jump) || pad.pressed(PAD.a),
-      actionPressed: justDown(this.run) || pad.pressed(PAD.x) || pad.pressed(PAD.b),
-      pausePressed: justDown(this.pause) || pad.pressed(PAD.start),
+      run: any(this.run) || pad.held(PAD.x) || pad.held(PAD.b) || t.run,
+      jumpHeld: any(this.jump) || pad.held(PAD.a) || t.jump,
+      jumpPressed: justDown(this.jump) || pad.pressed(PAD.a) || touch.jumpPressed,
+      actionPressed: justDown(this.run) || pad.pressed(PAD.x) || pad.pressed(PAD.b) || touch.actionPressed,
+      pausePressed: justDown(this.pause) || pad.pressed(PAD.start) || touch.pausePressed,
     };
   }
 

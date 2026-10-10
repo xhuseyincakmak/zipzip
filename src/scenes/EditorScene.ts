@@ -87,6 +87,7 @@ export class EditorScene extends Phaser.Scene {
 
   create() {
     if (this.scene.isActive('HUD')) this.scene.stop('HUD');
+    if (this.scene.isActive('TouchControls')) this.scene.stop('TouchControls');
     Music.stop();
     this.world = this.add.container(0, 0);
     this.ui = this.add.container(0, 0).setDepth(100);

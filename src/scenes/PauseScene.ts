@@ -4,6 +4,7 @@ import { playSfx } from '../systems/audio';
 import { MenuPad } from '../systems/Input';
 import { Music } from '../systems/Music';
 import { Settings } from '../systems/Settings';
+import { isTouchDevice } from '../systems/Touch';
 
 const FONT = 'system-ui, sans-serif';
 
@@ -71,11 +72,17 @@ export class PauseScene extends Phaser.Scene {
     ];
     this.texts = this.items.map((_, i) =>
       this.add
-        .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 90 + i * 62, '', { fontFamily: FONT, fontSize: '32px', fontStyle: 'bold' })
-        .setOrigin(0.5),
+        .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 90 + i * 62, '', {
+          fontFamily: FONT,
+          fontSize: '32px',
+          fontStyle: 'bold',
+          padding: { x: 40, y: 10 }, // parmakla dokunmak için geniş alan
+        })
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true }),
     );
     this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 190, '↑ ↓ seç   Enter / Space onayla   Esc devam', {
+      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 190, isTouchDevice() ? 'Seçeneğe dokun' : '↑ ↓ seç   Enter / Space onayla   Esc devam', {
         fontFamily: FONT,
         fontSize: '20px',
         color: '#6b7280',
@@ -93,6 +100,12 @@ export class PauseScene extends Phaser.Scene {
       this.items[this.index].action();
       if (this.scene.isActive()) this.render();
     };
+    this.texts.forEach((t, i) =>
+      t.on('pointerdown', () => {
+        this.index = i;
+        choose();
+      }),
+    );
     kb.on('keydown-UP', () => move(-1));
     kb.on('keydown-W', () => move(-1));
     kb.on('keydown-DOWN', () => move(1));

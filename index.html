@@ -2,15 +2,68 @@
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Telefonda iki parmakla yakınlaştırma ve çift dokunma yakınlaştırması kapalı -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#111111" />
+    <!-- iPhone'da "Ana Ekrana Ekle" ile tam ekran açılır -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Zıpzıp" />
     <title>Zıpzıp Macera</title>
     <style>
-      html, body { margin: 0; height: 100%; background: #111; overflow: hidden; }
+      html, body {
+        margin: 0;
+        height: 100%;
+        background: #111;
+        overflow: hidden;
+        /* Dokunurken sayfa kaymasın, metin seçilmesin, uzun basınca menü açılmasın */
+        touch-action: none;
+        overscroll-behavior: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
       #game { width: 100%; height: 100%; }
+      #rotate {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 10;
+        background: #111827;
+        color: #fff;
+        font: 600 22px system-ui, sans-serif;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        text-align: center;
+        padding: 24px;
+      }
+      #rotate .phone {
+        width: 48px;
+        height: 80px;
+        border: 4px solid #fff;
+        border-radius: 10px;
+        animation: turn 1.6s ease-in-out infinite;
+      }
+      @keyframes turn {
+        0%, 30% { transform: rotate(0deg); }
+        60%, 100% { transform: rotate(-90deg); }
+      }
+      /* Dokunmatik cihaz dik tutulduysa oyun yerine uyarı */
+      @media (orientation: portrait) and (pointer: coarse) {
+        #rotate { display: flex; }
+      }
     </style>
   </head>
   <body>
     <div id="game"></div>
+    <div id="rotate">
+      <div class="phone"></div>
+      <div>Oynamak için telefonu yan çevir</div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -6,6 +6,7 @@ import { HUDScene } from './scenes/HUDScene';
 import { TitleScene } from './scenes/TitleScene';
 import { EditorScene } from './scenes/EditorScene';
 import { PauseScene } from './scenes/PauseScene';
+import { TouchControlsScene } from './scenes/TouchControlsScene';
 import { WorldMapScene } from './scenes/WorldMapScene';
 import { GameState } from './systems/GameState';
 import { Music } from './systems/Music';
@@ -23,8 +24,9 @@ const game = new Phaser.Game({
     default: 'arcade',
     arcade: { gravity: { x: 0, y: PHYS.gravity }, tileBias: 32, debug: false },
   },
-  input: { gamepad: true },
-  scene: [BootScene, TitleScene, WorldMapScene, GameScene, HUDScene, PauseScene, EditorScene],
+  // Dokunmatikte aynı anda birkaç parmak (ör. sağa yürürken zıplamak).
+  input: { gamepad: true, activePointers: 4 },
+  scene: [BootScene, TitleScene, WorldMapScene, GameScene, HUDScene, TouchControlsScene, PauseScene, EditorScene],
 });
 
 // Geliştirme sırasında konsoldan erişim için.

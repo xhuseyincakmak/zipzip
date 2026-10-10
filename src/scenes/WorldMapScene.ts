@@ -8,6 +8,7 @@ import { GameState } from '../systems/GameState';
 import { Save, type SaveData } from '../systems/Save';
 import { MenuPad } from '../systems/Input';
 import { Music } from '../systems/Music';
+import { isTouchDevice } from '../systems/Touch';
 
 const FONT = 'system-ui, sans-serif';
 const NODE_Y = 470;
@@ -36,6 +37,7 @@ export class WorldMapScene extends Phaser.Scene {
 
   create() {
     if (this.scene.isActive('HUD')) this.scene.stop('HUD');
+    if (this.scene.isActive('TouchControls')) this.scene.stop('TouchControls');
     createParallaxBackground(this, 'hills').scrollTo(0);
     for (let x = 0; x < GAME_WIDTH; x += TILE) {
       this.add.image(x + TILE / 2, GAME_HEIGHT - TILE * 1.5, ATLAS.tiles, 'terrain_grass_block_top');
@@ -53,7 +55,7 @@ export class WorldMapScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(6);
     this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT - 40, '← → seç    Space / Enter oyna    Esc başlık ekranı', {
+      .text(GAME_WIDTH / 2, GAME_HEIGHT - 40, isTouchDevice() ? 'Bölüme dokun, sonra OYNA' : '← → seç    Space / Enter oyna    Esc başlık ekranı', {
         fontFamily: FONT,
         fontSize: '22px',
         fontStyle: 'bold',
@@ -79,6 +81,7 @@ export class WorldMapScene extends Phaser.Scene {
     this.tweens.add({ targets: this.marker, y: '-=10', duration: 350, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
 
     this.refresh(false);
+    this.createTouchButtons();
 
     const kb = this.input.keyboard!;
     kb.on('keydown-LEFT', () => this.move(-1));
@@ -97,6 +100,34 @@ export class WorldMapScene extends Phaser.Scene {
       if (p.has('ok')) this.play();
       if (p.has('back')) this.scene.start('Title');
     });
+  }
+
+  /** Fare ve dokunmatik için ekrandaki düğmeler. */
+  private createTouchButtons() {
+    const button = (x: number, y: number, label: string, onTap: () => void, size = 30, bg = '#1f2937') =>
+      this.add
+        .text(x, y, label, { fontFamily: FONT, fontSize: `${size}px`, fontStyle: 'bold', color: '#ffffff', backgroundColor: bg, padding: { x: 18, y: 12 } })
+        .setOrigin(0.5)
+        .setDepth(8)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerdown', onTap);
+    button(56, NODE_Y, '◀', () => this.move(-1), 36);
+    button(GAME_WIDTH - 56, NODE_Y, '▶', () => this.move(1), 36);
+    button(GAME_WIDTH / 2, 600, '▶  OYNA', () => this.play(), 34, '#15803d');
+    button(GAME_WIDTH - 90, 28, 'Başlık', () => this.scene.start('Title'), 22);
+  }
+
+  /** Haritadaki bir bölüm düğmesine dokunuldu: seçiliyse oyna, değilse seç. */
+  private tapNode(id: string) {
+    const index = LEVEL_ORDER.indexOf(id);
+    if (!this.save.unlocked.includes(id)) {
+      playSfx(this, 'bump', { volume: 0.4 });
+      return;
+    }
+    if (index === this.selected) return this.play();
+    this.selected = index;
+    playSfx(this, 'select', { volume: 0.4 });
+    this.refresh(true);
   }
 
   private move(dir: number) {
@@ -159,7 +190,13 @@ export class WorldMapScene extends Phaser.Scene {
       const unlocked = this.save.unlocked.includes(n.id);
       const done = this.save.best[n.id] !== undefined;
       const color = done ? 0x22c55e : unlocked ? 0xfacc15 : 0x9ca3af;
-      layer.add(this.add.circle(n.x, NODE_Y, 34, color).setStrokeStyle(6, 0x1f2937));
+      layer.add(
+        this.add
+          .circle(n.x, NODE_Y, 34, color)
+          .setStrokeStyle(6, 0x1f2937)
+          .setInteractive({ useHandCursor: true })
+          .on('pointerdown', () => this.tapNode(n.id)),
+      );
       if (!unlocked) layer.add(this.add.image(n.x, NODE_Y, ATLAS.tiles, 'lock_yellow').setScale(0.6));
       else if (done) layer.add(this.add.image(n.x + 4, NODE_Y - 4, ATLAS.tiles, 'flag_green_a').setScale(0.7));
       layer.add(

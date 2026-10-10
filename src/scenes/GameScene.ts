@@ -16,6 +16,7 @@ import { InputController } from '../systems/Input';
 import { Music, trackForTheme } from '../systems/Music';
 import { Save } from '../systems/Save';
 import { Settings } from '../systems/Settings';
+import { isTouchDevice } from '../systems/Touch';
 import type { HUDScene } from './HUDScene';
 
 const LOOK_AHEAD = 110;
@@ -128,6 +129,7 @@ export class GameScene extends Phaser.Scene {
     this.time.addEvent({ delay: TIME_TICK_MS, loop: true, callback: () => this.tickTime() });
 
     if (!this.scene.isActive('HUD')) this.scene.launch('HUD');
+    if (isTouchDevice() && !this.scene.isActive('TouchControls')) this.scene.launch('TouchControls');
     this.hud()?.hideBanner();
 
     this.input2 = new InputController(this);
@@ -822,7 +824,7 @@ export class GameScene extends Phaser.Scene {
 
   private createHelpText() {
     const help = this.add
-      .text(16, 84, `${this.level.name}\n← → hareket   Space/Z zıpla   Shift/X koş   ↓ eğil   Esc duraklat`, {
+      .text(16, 84, `${this.level.name}\n${isTouchDevice() ? '◀ ▶ yürü   A zıpla   B koş / ateş   II duraklat' : '← → hareket   Space/Z zıpla   Shift/X koş   ↓ eğil   Esc duraklat'}`, {
         fontFamily: 'system-ui, sans-serif',
         fontSize: '20px',
         color: '#1f2937',

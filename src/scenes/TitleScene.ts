@@ -7,6 +7,7 @@ import { Save } from '../systems/Save';
 import { MenuPad } from '../systems/Input';
 import { Music } from '../systems/Music';
 import { Settings } from '../systems/Settings';
+import { isTouchDevice } from '../systems/Touch';
 
 const FONT = 'system-ui, sans-serif';
 
@@ -17,6 +18,7 @@ export class TitleScene extends Phaser.Scene {
 
   create() {
     if (this.scene.isActive('HUD')) this.scene.stop('HUD');
+    if (this.scene.isActive('TouchControls')) this.scene.stop('TouchControls');
     const bg = createParallaxBackground(this, 'hills');
     let scroll = 0;
     this.events.on(Phaser.Scenes.Events.UPDATE, (_t: number, dt: number) => bg.scrollTo((scroll += dt * 0.08)));
@@ -28,6 +30,7 @@ export class TitleScene extends Phaser.Scene {
     }
 
     const cx = GAME_WIDTH / 2;
+    const touch = isTouchDevice();
     this.add
       .text(cx, 190, 'Zıpzıp Macera', { fontFamily: FONT, fontSize: '104px', fontStyle: '900', color: '#facc15' })
       .setOrigin(0.5)
@@ -40,7 +43,7 @@ export class TitleScene extends Phaser.Scene {
     this.add.image(cx + 260, GAME_HEIGHT - TILE * 2, ATLAS.enemies, 'snail_rest').setOrigin(0.5, 1).setFlipX(true);
 
     const press = this.add
-      .text(cx, 360, 'Başlamak için Space / Enter', { fontFamily: FONT, fontSize: '36px', fontStyle: 'bold', color: '#ffffff' })
+      .text(cx, 360, touch ? 'Başlamak için dokun' : 'Başlamak için Space / Enter', { fontFamily: FONT, fontSize: '36px', fontStyle: 'bold', color: '#ffffff' })
       .setOrigin(0.5)
       .setStroke('#1f2937', 8);
     this.tweens.add({ targets: press, alpha: 0.35, duration: 650, yoyo: true, repeat: -1 });
@@ -50,7 +53,7 @@ export class TitleScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.add
-      .text(GAME_WIDTH - 16, GAME_HEIGHT - 12, 'E: bölüm editörü   M: müzik aç/kapat   N: kaydı sıfırla   •   Grafik & ses efektleri: Kenney.nl (CC0)', {
+      .text(GAME_WIDTH - 16, GAME_HEIGHT - 12, (touch ? '' : 'E: bölüm editörü   M: müzik aç/kapat   N: kaydı sıfırla   •   ') + 'Grafik & ses efektleri: Kenney.nl (CC0)', {
         fontFamily: FONT,
         fontSize: '18px',
         color: '#ffffff',
@@ -67,14 +70,33 @@ export class TitleScene extends Phaser.Scene {
       GameState.reset();
       this.scene.start('WorldMap');
     };
-    kb.once('keydown-SPACE', start);
-    kb.once('keydown-ENTER', start);
-    kb.on('keydown-E', () => this.scene.start('Editor'));
-    kb.on('keydown-M', () => {
+    // Fare/dokunma: boş bir yere dokununca başla. Telefonda tam ekran ve yatay kilit dene.
+    this.input.on('pointerup', (_p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => {
+      if (over.length) return;
+      if (touch && this.scale.fullscreen.available && !this.scale.isFullscreen) {
+        this.scale.startFullscreen();
+        const orientation = screen.orientation as ScreenOrientation & { lock?: (o: string) => Promise<void> };
+        orientation.lock?.('landscape').catch(() => {});
+      }
+      start();
+    });
+    const musicBtn = this.add
+      .text(GAME_WIDTH - 16, 16, '', { fontFamily: FONT, fontSize: '24px', fontStyle: 'bold', color: '#ffffff', backgroundColor: '#1f2937', padding: { x: 14, y: 10 } })
+      .setOrigin(1, 0)
+      .setInteractive({ useHandCursor: true });
+    const refreshMusicBtn = () => musicBtn.setText(`♪ Müzik: ${Settings.music ? 'Açık' : 'Kapalı'}`);
+    refreshMusicBtn();
+    const toggleMusic = () => {
       Settings.music = !Settings.music;
       Settings.save();
       Music.refresh('title');
-    });
+      refreshMusicBtn();
+    };
+    musicBtn.on('pointerdown', toggleMusic);
+    kb.once('keydown-SPACE', start);
+    kb.once('keydown-ENTER', start);
+    kb.on('keydown-E', () => this.scene.start('Editor'));
+    kb.on('keydown-M', toggleMusic);
     const pad = new MenuPad(this);
     this.events.on(Phaser.Scenes.Events.UPDATE, () => {
       if (pad.poll().has('ok')) start();
