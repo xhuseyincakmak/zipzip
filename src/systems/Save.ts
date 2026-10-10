@@ -1,6 +1,7 @@
-import { FIRST_LEVEL } from '../levels/worlds';
+import { FIRST_LEVEL, LEVEL_ORDER } from '../levels/worlds';
 
-const KEY = 'zipzip-macera-save-v1';
+// v2: bölümler numara yerine isimle kaydediliyor; eski kayıtlar geçersiz.
+const KEY = 'zipzip-macera-save-v2';
 
 export interface SaveData {
   /** Oynanabilir bölümler. */
@@ -22,7 +23,10 @@ export const Save = {
       if (!raw) return fresh();
       const data = JSON.parse(raw) as Partial<SaveData>;
       return {
-        unlocked: Array.isArray(data.unlocked) && data.unlocked.length ? data.unlocked : [FIRST_LEVEL],
+        // Artık olmayan bölümleri ayıkla; ilk bölüm her zaman açık.
+        unlocked: [FIRST_LEVEL, ...(Array.isArray(data.unlocked) ? data.unlocked : [])].filter(
+          (id, i, all) => LEVEL_ORDER.includes(id) && all.indexOf(id) === i,
+        ),
         best: data.best && typeof data.best === 'object' ? data.best : {},
       };
     } catch {

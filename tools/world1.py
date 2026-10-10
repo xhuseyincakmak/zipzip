@@ -1,7 +1,7 @@
-"""Dünya 1: Çayır Diyarı. Çalıştır: python3 tools/world1.py"""
+"""Çayır temalı 4 bölüm. Çalıştır: python3 tools/world1.py"""
 import os, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from levelkit import Level, GROUND
+from levelkit import Level, GROUND, SLUGS
 
 OUT = os.path.join(os.path.dirname(__file__), '..', 'src', 'levels')
 G = GROUND
@@ -140,4 +140,4 @@ def level_1_4():
 
 if __name__ == '__main__':
     for lid, fn in [('1-1', level_1_1), ('1-2', level_1_2), ('1-3', level_1_3), ('1-4', level_1_4)]:
-        fn().write(os.path.join(OUT, f'{lid}.txt'))
+        fn().write(os.path.join(OUT, f'{SLUGS[lid]}.txt'))

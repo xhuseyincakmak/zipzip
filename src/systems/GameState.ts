@@ -13,8 +13,10 @@ class GameStateStore extends Phaser.Events.EventEmitter {
   lives = START_LIVES;
   /** Kalan süre (oyun birimi); GameScene her bölüm başında ayarlar. */
   time = 0;
-  /** Oynanan bölüm (HUD'da gösterilir). */
+  /** Oynanan bölüm. */
   levelId = '';
+  /** HUD'da gösterilen bölüm adı. */
+  levelName = '';
   /** Bölümler arası taşınan form; ölünce küçülür. */
   form: Form = 'small';
   /** Ölünce bu noktadan devam edilir (aynı bölümdeyse). */

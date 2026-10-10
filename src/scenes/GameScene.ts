@@ -6,7 +6,7 @@ import { Item, type ItemKind } from '../entities/Item';
 import { Player, type Form } from '../entities/Player';
 import { buildLevel, tileIndex, type BlockContent, type BuiltLevel } from '../levels/buildLevel';
 import { getLevel } from '../levels';
-import { nextLevelOf } from '../levels/worlds';
+import { LEVEL_ORDER, levelNumber, nextLevelOf, worldOf } from '../levels/worlds';
 import type { LevelData } from '../levels/Level';
 import { playSfx } from '../systems/audio';
 import { createParallaxBackground, type ParallaxBackground } from '../systems/background';
@@ -123,6 +123,7 @@ export class GameScene extends Phaser.Scene {
     cam.setRoundPixels(true);
 
     GameState.levelId = this.level.id;
+    GameState.levelName = this.level.name;
     GameState.setTime(this.level.time);
     this.time.addEvent({ delay: TIME_TICK_MS, loop: true, callback: () => this.tickTime() });
 
@@ -148,9 +149,10 @@ export class GameScene extends Phaser.Scene {
     const style = { fontFamily: 'system-ui, sans-serif', fontStyle: 'bold', color: '#ffffff' };
     const overlay = this.add.container(0, 0).setScrollFactor(0).setDepth(200);
     overlay.add(this.add.rectangle(0, 0, GAME_WIDTH, GAME_HEIGHT, 0x111827).setOrigin(0));
-    const title = this.testMode ? 'TEST' : `DÜNYA ${this.level.id}`;
-    overlay.add(this.add.text(cx, 250, title, { ...style, fontSize: '56px' }).setOrigin(0.5));
-    overlay.add(this.add.text(cx, 320, this.level.name, { ...style, fontSize: '32px', color: '#fde68a' }).setOrigin(0.5));
+    const n = levelNumber(this.level.id);
+    const subtitle = this.testMode ? 'TEST' : n ? `${n}. bölüm / ${LEVEL_ORDER.length} • ${worldOf(this.level.id)?.name}` : '';
+    overlay.add(this.add.text(cx, 250, this.level.name, { ...style, fontSize: '56px' }).setOrigin(0.5));
+    overlay.add(this.add.text(cx, 320, subtitle, { ...style, fontSize: '28px', color: '#fde68a' }).setOrigin(0.5));
     overlay.add(this.add.image(cx - 40, 430, ATLAS.tiles, 'hud_player_helmet_green').setScale(0.9));
     overlay.add(this.add.text(cx + 10, 430, `× ${GameState.lives}`, { ...style, fontSize: '40px' }).setOrigin(0, 0.5));
     this.time.delayedCall(1600, () => {

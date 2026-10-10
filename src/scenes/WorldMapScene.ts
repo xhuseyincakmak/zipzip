@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { ATLAS, GAME_HEIGHT, GAME_WIDTH, TILE } from '../config';
 import { getLevel } from '../levels';
-import { LEVEL_ORDER, worldOf, WORLDS } from '../levels/worlds';
+import { LEVEL_ORDER, levelNumber, worldOf, WORLDS } from '../levels/worlds';
 import { playSfx } from '../systems/audio';
 import { createParallaxBackground } from '../systems/background';
 import { GameState } from '../systems/GameState';
@@ -134,8 +134,8 @@ export class WorldMapScene extends Phaser.Scene {
 
     const level = getLevel(id);
     const best = this.save.best[id];
-    this.title.setText(`${world.name} — ${id}`);
-    this.detail.setText(`${level.name}\n${best !== undefined ? `En iyi skor: ${best}` : 'Henüz bitirilmedi'}`);
+    this.title.setText(`${level.name}`);
+    this.detail.setText(`${world.name} • ${levelNumber(id)}. bölüm\n${best !== undefined ? `En iyi skor: ${best}` : 'Henüz bitirilmedi'}`);
   }
 
   private drawWorld(worldIndex: number) {
@@ -164,7 +164,7 @@ export class WorldMapScene extends Phaser.Scene {
       else if (done) layer.add(this.add.image(n.x + 4, NODE_Y - 4, ATLAS.tiles, 'flag_green_a').setScale(0.7));
       layer.add(
         this.add
-          .text(n.x, NODE_Y + 58, n.id, { fontFamily: FONT, fontSize: '28px', fontStyle: 'bold', color: '#ffffff' })
+          .text(n.x, NODE_Y + 58, String(levelNumber(n.id)), { fontFamily: FONT, fontSize: '28px', fontStyle: 'bold', color: '#ffffff' })
           .setOrigin(0.5)
           .setStroke('#1f2937', 6),
       );

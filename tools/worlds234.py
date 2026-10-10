@@ -1,7 +1,7 @@
-"""Dünya 2-4. Çalıştır: python3 tools/worlds234.py"""
+"""Mağara, gökyüzü ve kale temalı 12 bölüm. Çalıştır: python3 tools/worlds234.py"""
 import os, sys
 sys.path.insert(0, os.path.dirname(__file__))
-from levelkit import Level, GROUND
+from levelkit import Level, GROUND, SLUGS
 
 OUT = os.path.join(os.path.dirname(__file__), '..', 'src', 'levels')
 G = GROUND
@@ -233,6 +233,6 @@ if __name__ == '__main__':
         if problems:
             failed.append(f'{lid}: ' + '; '.join(problems))
             continue
-        L.write(os.path.join(OUT, f'{lid}.txt'))
+        L.write(os.path.join(OUT, f'{SLUGS[lid]}.txt'))
     if failed:
         raise SystemExit('\n'.join(failed))

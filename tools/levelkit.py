@@ -7,6 +7,14 @@ from collections import deque
 
 # G (boss kapısı) oyun sırasında katıdır ama boss yenilince açılır; doğrulamada geçilebilir sayılır.
 SOLID = set('#BX?M*')
+
+# Üretici betiklerdeki kısa kodlar → src/levels/ dosya adları (oyundaki sıra: src/levels/worlds.ts).
+SLUGS = {
+    '1-1': 'yesil-baslangic', '1-2': 'orman-patikasi', '1-3': 'mantar-tepeleri', '1-4': 'tas-kale',
+    '2-1': 'col-kapisi', '2-2': 'mor-magara', '2-3': 'sarkit-gecidi', '2-4': 'diken-tuneli',
+    '3-1': 'bulut-yolu', '3-2': 'karli-zirve', '3-3': 'ruzgar-kopruleri', '3-4': 'yildiz-kulesi',
+    '4-1': 'lav-kapisi', '4-2': 'testere-salonu', '4-3': 'erimis-kopruler', '4-4': 'dev-slimein-kalesi',
+}
 PLATFORM_RANGE = 3
 H = 12
 GROUND = 10  # zeminin üst satırı; oyuncu 9. satırda durur

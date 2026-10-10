@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { ATLAS, GAME_HEIGHT, GAME_WIDTH, TILE } from '../config';
 import { getLevel } from '../levels';
+import { LEVEL_ORDER } from '../levels/worlds';
 import { terrainFrame } from '../levels/buildLevel';
 import { BACKGROUNDS, LEGEND, parseLevel, THEMES, type Background, type LevelData, type Theme } from '../levels/Level';
 import { validateRows } from '../levels/validate';
@@ -477,10 +478,11 @@ export class EditorScene extends Phaser.Scene {
   }
 
   private openExisting() {
-    const id = window.prompt('Açılacak bölüm (ör. 1-1, 4-4):', '1-1');
-    if (!id) return;
+    const input = window.prompt(`Açılacak bölümün sırası (1-${LEVEL_ORDER.length}) ya da adı:`, '1');
+    if (!input) return;
+    const id = findLevelId(input.trim());
     try {
-      const level = getLevel(id.trim());
+      const level = getLevel(id);
       const meta: Meta = { name: level.name, theme: level.theme, background: level.background, time: level.time };
       this.loadText(this.serialize(meta, level.rows.map((r) => r.split(''))));
     } catch {
@@ -552,11 +554,19 @@ function cycle<T>(list: readonly T[], current: T): T {
   return list[(list.indexOf(current) + 1) % list.length];
 }
 
+/** "3", "Orman Patikası" ya da "orman-patikasi" → bölüm kimliği. */
+function findLevelId(input: string): string {
+  const n = Number(input);
+  if (Number.isInteger(n) && n >= 1 && n <= LEVEL_ORDER.length) return LEVEL_ORDER[n - 1];
+  const s = slug(input);
+  return LEVEL_ORDER.find((id) => id === s || slug(getLevel(id).name) === s) ?? s;
+}
+
 function slug(name: string) {
-  const map: Record<string, string> = { ç: 'c', ğ: 'g', ı: 'i', ö: 'o', ş: 's', ü: 'u' };
+  const map: Record<string, string> = { ç: 'c', ğ: 'g', ı: 'i', ö: 'o', ş: 's', ü: 'u', â: 'a' };
   return name
-    .toLowerCase()
-    .replace(/[çğıöşü]/g, (c) => map[c])
+    .toLocaleLowerCase('tr')
+    .replace(/[çğıöşüâ]/g, (c) => map[c])
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 }

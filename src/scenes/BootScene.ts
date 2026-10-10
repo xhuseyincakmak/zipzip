@@ -30,7 +30,7 @@ export class BootScene extends Phaser.Scene {
     this.make.graphics({}, false).fillStyle(0xffffff).fillCircle(6, 6, 6).generateTexture('dot', 12, 12).destroy();
     Music.init(this.game);
     this.createTransparentBackgrounds();
-    // Geliştirme kolaylığı: ?level=1-3 ile doğrudan bölüm açılır.
+    // Geliştirme kolaylığı: ?level=orman-patikasi ile doğrudan bölüm açılır.
     const level = new URLSearchParams(location.search).get('level');
     if (level) this.scene.start('Game', { levelId: level });
     else this.scene.start('Title');

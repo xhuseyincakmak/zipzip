@@ -29,6 +29,22 @@ npm run build    # dist/ klasörüne statik site üretir
 - Müzikler dosya değil: `src/systems/Music.ts` içindeki nota dizileri Web Audio ile çalınır.
   Yeni parça eklemek için `TRACKS` nesnesine bir giriş ekle.
 
+## Bölümler (kolaydan zora)
+
+| # | Bölüm | # | Bölüm |
+|---|---|---|---|
+| 1 | Yeşil Başlangıç | 9 | Lav Kapısı |
+| 2 | Çöl Kapısı | 10 | Bulut Yolu |
+| 3 | Orman Patikası | 11 | Sarkıt Geçidi |
+| 4 | Karlı Zirve | 12 | Diken Tüneli |
+| 5 | Taş Kale | 13 | Testere Salonu |
+| 6 | Mor Mağara | 14 | Erimiş Köprüler |
+| 7 | Yıldız Kulesi | 15 | Rüzgâr Köprüleri |
+| 8 | Mantar Tepeleri | 16 | Dev Slime'ın Kalesi (boss) |
+
+Haritada dörder bölümlük dört kademe var: Kolay Patika, Orta Yol, Zorlu Geçit, Son Sınav.
+Sıra `src/levels/worlds.ts` içinde.
+
 ## Bölüm editörü
 
 Başlık ekranında **E** tuşu editörü açar.
@@ -42,22 +58,22 @@ Başlık ekranında **E** tuşu editörü açar.
 | Test et | Enter ya da "Test et" — can düşmez; Esc menüsünden "Haritaya dön" editöre döner |
 | Kontrol et | Başlangıçtan bitişe ulaşılabiliyor mu, S/F sayısı doğru mu |
 | Dışa aktar | "Kopyala" ya da ".txt indir"; dosyayı `src/levels/` içine koy ve `worlds.ts`'e ekle |
-| İçe aktar | "Dosyadan aç", "Panodan yapıştır" ya da "Bölüm aç…" (ör. `2-3`) |
+| İçe aktar | "Dosyadan aç", "Panodan yapıştır" ya da "Bölüm aç…" (sıra numarası ya da adı, ör. `11` veya `Sarkıt Geçidi`) |
 
 Taslak tarayıcıda otomatik saklanır; sayfayı kapatıp açınca kaldığın yerden devam edersin.
 
 ## Yeni bölüm ekleme
 
-1. `src/levels/` içine `.txt` dosyası koy; dosya adı bölüm kimliği olur (ör. `2-1.txt`).
+1. `src/levels/` içine `.txt` dosyası koy; dosya adı bölüm kimliği olur (ör. `buzlu-magara.txt`).
 2. Bölümü `src/levels/worlds.ts` içindeki dünya listesine ekle (harita sırası ve kilit açma buradan).
-3. Doğrudan denemek için: `http://localhost:5173/?level=2-1`
+3. Doğrudan denemek için: `http://localhost:5173/?level=buzlu-magara`
 
 Bölümler elle yazılabilir ya da `tools/` altındaki Python betikleriyle üretilebilir.
-`python3 tools/world1.py` ve `python3 tools/worlds234.py` dünyaları yeniden yazar ve her bölümün başlangıçtan bitişe
+`python3 tools/world1.py` ve `python3 tools/worlds234.py` hazır 16 bölümü yeniden yazar ve her bölümün başlangıçtan bitişe
 zıplayarak geçilebildiğini kontrol eder (geçilemiyorsa hata verir).
 
 ```
-name: Çayır 1-2
+name: Buzlu Mağara
 theme: grass          # grass | dirt | sand | snow | stone | purple
 background: hills     # hills | trees | desert | mushrooms | cave
 time: 300

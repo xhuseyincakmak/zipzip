@@ -52,8 +52,8 @@ export class HUDScene extends Phaser.Scene {
         .setOrigin(1, 0.5)
         .setStroke('#1f2937', 6);
     this.levelText = this.add
-      .text(GAME_WIDTH / 2 - 120, y, '', { fontFamily: 'system-ui, sans-serif', fontSize: '22px', fontStyle: 'bold', color: '#ffffff' })
-      .setOrigin(0, 0.5)
+      .text(GAME_WIDTH / 2 - 60, y, '', { fontFamily: 'system-ui, sans-serif', fontSize: '22px', fontStyle: 'bold', color: '#ffffff' })
+      .setOrigin(0.5, 0.5)
       .setStroke('#1f2937', 6);
     label(GAME_WIDTH - 410, 'SKOR');
     this.score = new DigitText(this, GAME_WIDTH - 396, y);
@@ -84,7 +84,7 @@ export class HUDScene extends Phaser.Scene {
     this.lives.set('x' + GameState.lives);
     this.coins.set('x' + String(GameState.coins).padStart(2, '0'));
     this.score.set(String(GameState.score).padStart(6, '0'));
-    this.levelText.setText(GameState.levelId ? `DÜNYA ${GameState.levelId}` : '');
+    this.levelText.setText(GameState.levelName);
     this.timeText.set(String(Math.max(0, GameState.time)).padStart(3, '0'));
   }
 }
