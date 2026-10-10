@@ -5,7 +5,7 @@ import { MenuPad } from '../systems/Input';
 import { Music } from '../systems/Music';
 import { Settings } from '../systems/Settings';
 import { isTouchDevice } from '../systems/Touch';
-import { fullscreenAvailable, onActivate, onFullscreenChange, toggleFullscreen } from '../systems/Fullscreen';
+import { fullscreenOffered, isFullscreen, onActivate, onFullscreenChange, toggleFullscreen } from '../systems/Fullscreen';
 
 const FONT = 'system-ui, sans-serif';
 
@@ -70,11 +70,11 @@ export class PauseScene extends Phaser.Scene {
           Settings.save();
         },
       },
-      ...(fullscreenAvailable(this.game)
+      ...(fullscreenOffered()
         ? [
             {
-              label: () => `Tam ekran: ${this.scale.isFullscreen ? 'Açık' : 'Kapalı'}`,
-              action: () => toggleFullscreen(this.game),
+              label: () => `Tam ekran: ${isFullscreen() ? 'Açık' : 'Kapalı'}`,
+              action: toggleFullscreen,
             },
           ]
         : []),

@@ -8,7 +8,7 @@ import { MenuPad } from '../systems/Input';
 import { Music } from '../systems/Music';
 import { Settings } from '../systems/Settings';
 import { isTouchDevice } from '../systems/Touch';
-import { addFullscreenButton, fullscreenAvailable, toggleFullscreen } from '../systems/Fullscreen';
+import { addFullscreenButton, fullscreenSupported, isFullscreen, toggleFullscreen } from '../systems/Fullscreen';
 
 const FONT = 'system-ui, sans-serif';
 
@@ -74,7 +74,8 @@ export class TitleScene extends Phaser.Scene {
     // Fare/dokunma: boş bir yere dokununca başla. Telefonda tam ekran ve yatay kilit dene.
     const tapStart = (p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[], up: boolean) => {
       if (over.length || p.wasTouch !== up) return;
-      if (touch && fullscreenAvailable(this.game) && !this.scale.isFullscreen) toggleFullscreen(this.game);
+      // Telefonda ilk dokunuşta tam ekrana geç (iPhone'da desteklenmediği için orada denenmez).
+      if (touch && fullscreenSupported() && !isFullscreen()) toggleFullscreen();
       start();
     };
     this.input.on('pointerdown', (p: Phaser.Input.Pointer, over: Phaser.GameObjects.GameObject[]) => tapStart(p, over, false));
