@@ -49,7 +49,9 @@ export function toggleFullscreen() {
     return;
   }
   if (!fullscreenSupported()) {
-    showHint('iPhone\'da tam ekran için: Safari\'de Paylaş (⬆︎) → "Ana Ekrana Ekle", sonra oyunu ana ekrandaki ikondan aç.');
+    showHint(
+      'iPhone tarayıcıda tam ekrana izin vermiyor. Tam ekran için: Paylaş (⬆︎) menüsünden "Ana Ekrana Ekle"yi seç, sonra oyunu ana ekrandaki Zıpzıp ikonundan aç.',
+    );
     return;
   }
   try {

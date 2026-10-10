@@ -11,6 +11,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="Zıpzıp" />
     <title>Zıpzıp Macera</title>
+    <!-- Ana ekrana eklenince uygulama gibi, tarayıcı çubukları olmadan açılır (iPhone'da tam ekranın tek yolu). -->
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
     <style>
       html, body {
         margin: 0;
@@ -60,6 +64,23 @@
   </head>
   <body>
     <div id="game"></div>
+    <!-- Telefonda konsol görünmediği için hatalar ekranda gösterilir (ekran görüntüsüyle iletilebilsin). -->
+    <div id="errors" style="display:none;position:fixed;left:8px;right:8px;top:8px;z-index:30;padding:10px 12px;border-radius:8px;background:#7f1d1d;color:#fff;font:13px/1.4 ui-monospace,Menlo,monospace;white-space:pre-wrap;max-height:60vh;overflow:auto"></div>
+    <script>
+      (function () {
+        var box = document.getElementById('errors');
+        function show(msg) {
+          box.style.display = 'block';
+          box.textContent += (box.textContent ? '\n' : '') + 'Hata: ' + msg;
+        }
+        window.addEventListener('error', function (e) {
+          show((e.message || 'bilinmeyen') + (e.filename ? ' @ ' + e.filename.split('/').pop() + ':' + e.lineno : ''));
+        });
+        window.addEventListener('unhandledrejection', function (e) {
+          show('Promise: ' + (e.reason && (e.reason.message || e.reason)));
+        });
+      })();
+    </script>
     <div id="rotate">
       <div class="phone"></div>
       <div>Oynamak için telefonu yan çevir</div>
