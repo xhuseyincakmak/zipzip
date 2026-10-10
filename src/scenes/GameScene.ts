@@ -164,6 +164,13 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
+  /** Şu an çalması gereken bölüm müziği (boss uyanıksa boss, yıldız varsa yıldız). */
+  private levelTrack() {
+    if (this.player.hasStar) return 'star';
+    if (this.boss?.active2 && !this.boss.dead) return 'boss';
+    return trackForTheme(this.level.theme);
+  }
+
   private openPause() {
     this.scene.pause();
     Music.pause();
@@ -171,7 +178,7 @@ export class GameScene extends Phaser.Scene {
       onChoice: (choice: 'resume' | 'restart' | 'map') => {
         this.scene.resume();
         Music.resume();
-        if (Settings.music && !Music.current) Music.play(this.boss?.active2 && !this.boss.dead ? 'boss' : trackForTheme(this.level.theme));
+        if (Settings.music && !Music.current) Music.play(this.levelTrack());
         if (choice === 'restart') this.restartLevel();
         if (choice === 'map') {
           GameState.checkpoint = null;
@@ -208,6 +215,8 @@ export class GameScene extends Phaser.Scene {
     this.updateFireballs();
     this.updatePlatforms();
     this.updateBoss(dt);
+    // Yıldız bitince bölümün kendi müziğine dön.
+    if (Music.current === 'star' && !this.player.hasStar) Music.play(this.levelTrack());
     this.checkHazards();
 
     if (this.player.body.top > this.built.heightPx) this.killPlayer(false);
@@ -507,7 +516,11 @@ export class GameScene extends Phaser.Scene {
     this.addPoints(1000, item.x, item.y - 20);
     playSfx(this, 'magic', { volume: 0.6 });
     const p = this.player;
-    if (item.kind === 'star') return p.startStar();
+    if (item.kind === 'star') {
+      p.startStar();
+      Music.play('star');
+      return;
+    }
     if (item.kind === 'grow' && p.form === 'small') return this.transformPlayer('big');
     if (item.kind === 'fire' && p.form !== 'fire') this.transformPlayer('fire');
     // Zaten o formdaysa yalnızca puan.

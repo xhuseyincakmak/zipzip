@@ -57,7 +57,7 @@ export class TitleScene extends Phaser.Scene {
       })
       .setOrigin(1, 1);
 
-    Music.play('sky');
+    Music.play('title');
     const kb = this.input.keyboard!;
     let started = false;
     const start = () => {
@@ -73,7 +73,7 @@ export class TitleScene extends Phaser.Scene {
     kb.on('keydown-M', () => {
       Settings.music = !Settings.music;
       Settings.save();
-      Music.refresh('sky');
+      Music.refresh('title');
     });
     const pad = new MenuPad(this);
     this.events.on(Phaser.Scenes.Events.UPDATE, () => {

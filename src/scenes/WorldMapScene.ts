@@ -88,7 +88,7 @@ export class WorldMapScene extends Phaser.Scene {
     kb.on('keydown-SPACE', () => this.play());
     kb.on('keydown-ENTER', () => this.play());
     kb.on('keydown-ESC', () => this.scene.start('Title'));
-    Music.play('overworld');
+    Music.play('map');
     const pad = new MenuPad(this);
     this.events.on(Phaser.Scenes.Events.UPDATE, () => {
       const p = pad.poll();

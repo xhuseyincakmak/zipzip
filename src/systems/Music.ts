@@ -91,6 +91,48 @@ const TRACKS: Record<string, Track> = {
     bass: 'E2 E3 E2 E3 E2 E3 E2 E3 C2 C3 C2 C3 D2 D3 D2 D3 ',
     drums: 'x . x . x x x . ',
   },
+  // Başlık ekranı: geniş, kahramanca
+  title: {
+    bpm: 120,
+    leadWave: 'square',
+    lead:
+      'C5 . . G4 C5 . E5 . D5 . . C5 D5 . G5 . E5 . . D5 C5 . A4 . G4 . . . . . . . ' +
+      'A4 . . F4 A4 . C5 . B4 . . A4 B4 . D5 . C5 . E5 . G5 . F5 E5 D5 . . . . . . . ',
+    bass:
+      'C3 . G2 . C3 . G2 . G2 . D3 . G2 . D3 . A2 . E3 . A2 . E3 . F2 . C3 . G2 . . . ' +
+      'F2 . C3 . F2 . C3 . G2 . D3 . G2 . D3 . A2 . E3 . C3 . G3 . G2 . D3 . G2 . . . ',
+    drums: 'x . . . x . . . ',
+  },
+  // Harita: sakin yürüyüş
+  map: {
+    bpm: 112,
+    leadWave: 'triangle',
+    lead:
+      'G4 . C5 . E5 . D5 C5 A4 . . . F4 . A4 . C5 . B4 A4 G4 . . . E4 . G4 . C5 . . . ' +
+      'D5 . C5 . B4 . G4 . A4 . B4 . C5 . . . E5 . D5 C5 B4 . A4 . G4 . . . . . . . ',
+    bass:
+      'C3 . . . G2 . . . F2 . . . F2 . . . D3 . . . G2 . . . C3 . . . C3 . . . ' +
+      'G2 . . . G2 . . . F2 . . . A2 . . . E2 . . . F2 . . . G2 . . . G2 . . . ',
+    drums: 'x . . . . . . . ',
+  },
+  // Çöl: doğu esintili, gergin aralıklar
+  desert: {
+    bpm: 128,
+    leadWave: 'square',
+    lead:
+      'E5 . F5 . G#5 . . F5 E5 . . . D5 . E5 . F5 . E5 . D5 C5 . . B4 . C5 . D5 . . . ' +
+      'E5 . . E5 F5 . G#5 . A5 . G#5 . F5 . E5 . F5 . E5 D5 C5 . B4 . A4 . . . . . . . ',
+    bass: 'A2 . E3 . A2 . E3 . F2 . C3 . F2 . C3 . G2 . D3 . G2 . D3 . E2 . B2 . E2 . G#2 . ',
+    drums: 'x . . x . . x . ',
+  },
+  // Yıldız: dokunulmazken hızlı ve coşkulu
+  star: {
+    bpm: 190,
+    leadWave: 'square',
+    lead: 'C6 . G5 C6 . G5 C6 D6 E6 . D6 C6 . G5 . . A5 . F5 A5 . F5 A5 B5 C6 . B5 A5 . G5 . . ',
+    bass: 'C3 C4 C3 C4 C3 C4 C3 C4 F2 F3 F2 F3 G2 G3 G2 G3 ',
+    drums: 'x . x x x . x x ',
+  },
   // Kısa parçalar
   clear: {
     bpm: 200,
@@ -266,5 +308,6 @@ export function trackForTheme(theme: string): TrackName {
   if (theme === 'purple') return 'cave';
   if (theme === 'snow') return 'sky';
   if (theme === 'stone') return 'castle';
+  if (theme === 'sand') return 'desert';
   return 'overworld';
 }
