@@ -65,19 +65,30 @@
   <body>
     <div id="game"></div>
     <!-- Telefonda konsol görünmediği için hatalar ekranda gösterilir (ekran görüntüsüyle iletilebilsin). -->
-    <div id="errors" style="display:none;position:fixed;left:8px;right:8px;top:8px;z-index:30;padding:10px 12px;border-radius:8px;background:#7f1d1d;color:#fff;font:13px/1.4 ui-monospace,Menlo,monospace;white-space:pre-wrap;max-height:60vh;overflow:auto"></div>
+    <div id="errors" title="Kapatmak için dokun" style="display:none;position:fixed;left:8px;right:8px;top:8px;z-index:30;padding:10px 12px;border-radius:8px;background:#7f1d1d;color:#fff;font:13px/1.4 ui-monospace,Menlo,monospace;white-space:pre-wrap;max-height:40vh;overflow:auto"></div>
     <script>
       (function () {
         var box = document.getElementById('errors');
+        // Dokununca kapanır (oyunun üstünü kapatıp dokunmayı engellemesin).
+        box.addEventListener('click', function () {
+          box.style.display = 'none';
+          box.textContent = '';
+        });
+        // Zararsız, bilinen mesajlar: tarayıcının kendi eklediği betiklerden gelen ayrıntısız
+        // "Script error." ve ilk dokunuştan önce sesin açılamaması.
+        var IGNORE = [/^Script error\.?$/, /audio device/i, /NotAllowedError/];
         function show(msg) {
+          msg = String(msg);
+          if (IGNORE.some(function (re) { return re.test(msg); })) return;
           box.style.display = 'block';
-          box.textContent += (box.textContent ? '\n' : '') + 'Hata: ' + msg;
+          box.textContent += (box.textContent ? '\n' : 'Hata (kapatmak için dokun)\n') + msg;
         }
         window.addEventListener('error', function (e) {
           show((e.message || 'bilinmeyen') + (e.filename ? ' @ ' + e.filename.split('/').pop() + ':' + e.lineno : ''));
         });
         window.addEventListener('unhandledrejection', function (e) {
-          show('Promise: ' + (e.reason && (e.reason.message || e.reason)));
+          var r = e.reason;
+          show((r && (r.name === 'NotAllowedError' ? r.name : r.message)) || r);
         });
       })();
     </script>

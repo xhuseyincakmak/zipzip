@@ -214,7 +214,8 @@ class MusicPlayer {
     this.track = { name, def, lead: parse(def.lead), bass: parse(def.bass), drums: def.drums ? parse(def.drums) : [] };
     this.step = 0;
     this.paused = false;
-    if (this.ctx.state === 'suspended') void this.ctx.resume();
+    // iPhone ses aygıtını ancak ilk dokunuştan sonra açar; öncesindeki ret zararsızdır (Phaser dokununca açar).
+    if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
     this.nextTime = this.ctx.currentTime + 0.05;
     this.timer = window.setInterval(() => this.schedule(), 25);
   }
