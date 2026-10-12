@@ -33,17 +33,19 @@ npm run build    # dist/ klasörüne statik site üretir
 
 | # | Bölüm | # | Bölüm |
 |---|---|---|---|
-| 1 | Yeşil Başlangıç | 9 | Lav Kapısı |
-| 2 | Çöl Kapısı | 10 | Bulut Yolu |
-| 3 | Orman Patikası | 11 | Sarkıt Geçidi |
-| 4 | Karlı Zirve | 12 | Diken Tüneli |
-| 5 | Taş Kale | 13 | Testere Salonu |
-| 6 | Mor Mağara | 14 | Erimiş Köprüler |
-| 7 | Yıldız Kulesi | 15 | Rüzgâr Köprüleri |
-| 8 | Mantar Tepeleri | 16 | Dev Slime'ın Kalesi (boss) |
+| 1 | Yeşil Başlangıç | 11 | Sarkıt Geçidi |
+| 2 | Çöl Kapısı | 12 | Diken Tüneli |
+| 3 | Orman Patikası | 13 | Kum Fırtınası |
+| 4 | Karlı Zirve | 14 | Buz Mağarası |
+| 5 | Taş Kale | 15 | Mor Orman |
+| 6 | Mor Mağara | 16 | Ateş Ormanı |
+| 7 | Yıldız Kulesi | 17 | Testere Salonu |
+| 8 | Mantar Tepeleri | 18 | Erimiş Köprüler |
+| 9 | Lav Kapısı | 19 | Rüzgâr Köprüleri |
+| 10 | Bulut Yolu | 20 | Dev Slime'ın Kalesi (boss) |
 
-Haritada dörder bölümlük dört kademe var: Kolay Patika, Orta Yol, Zorlu Geçit, Son Sınav.
-Sıra `src/levels/worlds.ts` içinde.
+Haritada dörder bölümlük beş kademe var: Kolay Patika, Orta Yol, Zorlu Geçit, Usta Yolu, Son Sınav.
+Sıra `src/levels/worlds.ts` içinde. Usta Yolu bölümleri `python3 tools/worlds5.py` ile üretilir.
 
 ## Bölüm editörü
 

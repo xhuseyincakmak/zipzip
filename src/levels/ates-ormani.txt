@@ -1,0 +1,17 @@
+name: Ateş Ormanı
+theme: dirt
+background: trees
+time: 330
+---
+
+
+
+
+                                                                        Y                                                                    X
+                                                                                                                                            XX
+         ?M?    oooooo                    |         BB*BB                             A            =                         |             XXX
+                                                                     =          XX                                                        XXXX
+                 =                                                              XX           =                                           XXXXX
+   S                      E E     W                     K     C                 XX                          E E E     W                 XXXXXX                    F
+################LLLLLL##################LLLLLLLL####################LLLLLLLL################LLLLLLLLLLLL####################LLLLLL################################################
+################LLLLLL##################LLLLLLLL####################LLLLLLLL################LLLLLLLLLLLL####################LLLLLL################################################

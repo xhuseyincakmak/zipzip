@@ -12,7 +12,8 @@ export const WORLDS: World[] = [
   { id: 1, name: 'Kolay Patika', levels: ['yesil-baslangic', 'col-kapisi', 'orman-patikasi', 'karli-zirve'] },
   { id: 2, name: 'Orta Yol', levels: ['tas-kale', 'mor-magara', 'yildiz-kulesi', 'mantar-tepeleri'] },
   { id: 3, name: 'Zorlu Geçit', levels: ['lav-kapisi', 'bulut-yolu', 'sarkit-gecidi', 'diken-tuneli'] },
-  { id: 4, name: 'Son Sınav', levels: ['testere-salonu', 'erimis-kopruler', 'ruzgar-kopruleri', 'dev-slimein-kalesi'] },
+  { id: 4, name: 'Usta Yolu', levels: ['kum-firtinasi', 'buz-magarasi', 'mor-orman', 'ates-ormani'] },
+  { id: 5, name: 'Son Sınav', levels: ['testere-salonu', 'erimis-kopruler', 'ruzgar-kopruleri', 'dev-slimein-kalesi'] },
 ];
 
 export const FIRST_LEVEL = WORLDS[0].levels[0];
