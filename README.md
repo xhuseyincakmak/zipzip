@@ -11,6 +11,17 @@ npm run dev      # http://localhost:5173
 npm run build    # dist/ klasörüne statik site üretir
 ```
 
+## Yayın
+
+Oyun GitHub Pages'te: **https://xhuseyincakmak.github.io/zipzip/**
+
+```bash
+npm run deploy   # derler ve gh-pages dalına yükler
+```
+
+Yedek: `npm run deploy:cloudflare` Cloudflare Pages'e yükler (ilk seferde `npx wrangler login`).
+Cloudflare'in `pages.dev` adresleri Türkiye'den açılmadığı için asıl yayın GitHub'dadır.
+
 ## Kontroller
 
 | Klavye | Gamepad | İşlev |

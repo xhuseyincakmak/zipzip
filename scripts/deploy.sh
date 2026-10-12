@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Oyunu derleyip GitHub Pages'e (gh-pages dalı) yükler.
+# Oyunu derleyip GitHub Pages'e (gh-pages dalı) yükler: https://xhuseyincakmak.github.io/zipzip/
 # Kullanım: npm run deploy
 set -euo pipefail
 cd "$(dirname "$0")/.."
