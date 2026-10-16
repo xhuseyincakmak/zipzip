@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Telefonda iki parmakla yakınlaştırma ve çift dokunma yakınlaştırması kapalı -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#111111" />
+    <!-- iPhone'da "Ana Ekrana Ekle" ile tam ekran açılır -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Zıpzıp" />
+    <title>Zıpzıp Macera</title>
+    <!-- Ana ekrana eklenince uygulama gibi, tarayıcı çubukları olmadan açılır (iPhone'da tam ekranın tek yolu). -->
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+    <style>
+      html, body {
+        margin: 0;
+        height: 100%;
+        background: #111;
+        overflow: hidden;
+        /* Dokunurken sayfa kaymasın, metin seçilmesin, uzun basınca menü açılmasın */
+        touch-action: none;
+        overscroll-behavior: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      #game { width: 100%; height: 100%; }
+      #rotate {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 10;
+        background: #111827;
+        color: #fff;
+        font: 600 22px system-ui, sans-serif;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        text-align: center;
+        padding: 24px;
+      }
+      #rotate .phone {
+        width: 48px;
+        height: 80px;
+        border: 4px solid #fff;
+        border-radius: 10px;
+        animation: turn 1.6s ease-in-out infinite;
+      }
+      @keyframes turn {
+        0%, 30% { transform: rotate(0deg); }
+        60%, 100% { transform: rotate(-90deg); }
+      }
+      /* Dokunmatik cihaz dik tutulduysa oyun yerine uyarı */
+      @media (orientation: portrait) and (pointer: coarse) {
+        #rotate { display: flex; }
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-DLHE_P7B.js"></script>
+  </head>
+  <body>
+    <div id="game"></div>
+    <!-- Telefonda konsol görünmediği için hatalar ekranda gösterilir (ekran görüntüsüyle iletilebilsin). -->
+    <div id="errors" title="Kapatmak için dokun" style="display:none;position:fixed;left:8px;right:8px;top:8px;z-index:30;padding:10px 12px;border-radius:8px;background:#7f1d1d;color:#fff;font:13px/1.4 ui-monospace,Menlo,monospace;white-space:pre-wrap;max-height:40vh;overflow:auto"></div>
+    <script>
+      (function () {
+        var box = document.getElementById('errors');
+        // Dokununca kapanır (oyunun üstünü kapatıp dokunmayı engellemesin).
+        box.addEventListener('click', function () {
+          box.style.display = 'none';
+          box.textContent = '';
+        });
+        // Zararsız, bilinen mesajlar: tarayıcının kendi eklediği betiklerden gelen ayrıntısız
+        // "Script error." ve ilk dokunuştan önce sesin açılamaması.
+        var IGNORE = [/^Script error\.?$/, /audio device/i, /NotAllowedError/];
+        function show(msg) {
+          msg = String(msg);
+          if (IGNORE.some(function (re) { return re.test(msg); })) return;
+          box.style.display = 'block';
+          box.textContent += (box.textContent ? '\n' : 'Hata (kapatmak için dokun)\n') + msg;
+        }
+        window.addEventListener('error', function (e) {
+          show((e.message || 'bilinmeyen') + (e.filename ? ' @ ' + e.filename.split('/').pop() + ':' + e.lineno : ''));
+        });
+        window.addEventListener('unhandledrejection', function (e) {
+          var r = e.reason;
+          show((r && (r.name === 'NotAllowedError' ? r.name : r.message)) || r);
+        });
+      })();
+    </script>
+    <div id="rotate">
+      <div class="phone"></div>
+      <div>Oynamak için telefonu yan çevir</div>
+    </div>
+  </body>
+</html>
