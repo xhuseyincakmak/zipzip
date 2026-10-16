@@ -30,6 +30,14 @@ const FLAG_HEIGHT_TILES = 9;
 const MAX_FIREBALLS = 2;
 const FIREBALL_SPEED = 680;
 const PLATFORM_SPEED = 100;
+/**
+ * Affedici çarpışma: düşman ancak oyuncu gövdesinin içine bu kadar girince hasar verir.
+ * Kenara ya da köşeye sürtünmek öldürmez; düşmanın tam önüne girmek öldürür.
+ */
+const HURT_INSET = { x: 12, top: 14 };
+const BOSS_HURT_INSET = { x: 28, top: 36 };
+/** Düşmanın üst kısmının bu oranına kadar inen ayak "basma" sayılır. */
+const STOMP_DEPTH = 0.65;
 const PLATFORM_RANGE = TILE * 3;
 /** Boss, oyuncu bu kadar yaklaşınca uyanır. */
 const BOSS_WAKE_DISTANCE = TILE * 9;
@@ -304,7 +312,7 @@ export class GameScene extends Phaser.Scene {
       playSfx(this, 'hurt', { volume: 0.4, rate: 0.8 });
       return;
     }
-    const stomp = e.stompable && p.velocity.y > 0 && p.bottom < eb.center.y;
+    const stomp = e.stompable && p.velocity.y > -40 && p.bottom < eb.top + eb.height * STOMP_DEPTH;
 
     if (stomp) {
       if (e.isHarmlessShell) {
@@ -326,7 +334,7 @@ export class GameScene extends Phaser.Scene {
       playSfx(this, 'hurt', { volume: 0.4, rate: 1.4 });
       return;
     }
-    if (e.canHurtPlayer(this.time.now)) this.hurtPlayer();
+    if (e.canHurtPlayer(this.time.now) && overlapsInside(p, eb, HURT_INSET)) this.hurtPlayer();
   }
 
   // ---------------------------------------------------------------- platformlar, tehlikeler, boss
@@ -441,7 +449,7 @@ export class GameScene extends Phaser.Scene {
     const boss = this.boss!;
     if (boss.dead || this.dying || this.player.frozen) return;
     const p = this.player.body;
-    const stomp = p.velocity.y > 0 && p.bottom < boss.body.top + 30;
+    const stomp = p.velocity.y > -40 && p.bottom < boss.body.top + boss.body.height * 0.45;
     if (stomp) {
       // Yüksek ve boss'tan uzağa sek; aksi halde hemen tekrar üstüne düşülüyor.
       p.setVelocity(Math.sign(this.player.x - boss.x || 1) * 380, -PHYS.jumpVelocity);
@@ -453,7 +461,7 @@ export class GameScene extends Phaser.Scene {
       return;
     }
     if (this.player.hasStar) return; // yıldız boss'a işlemez ama koruyor
-    this.hurtPlayer();
+    if (overlapsInside(p, boss.body, BOSS_HURT_INSET)) this.hurtPlayer();
   }
 
   private bossDefeated() {
@@ -835,4 +843,14 @@ export class GameScene extends Phaser.Scene {
       .setDepth(100);
     this.tweens.add({ targets: help, alpha: 0, delay: 6000, duration: 800 });
   }
+}
+
+/** Oyuncu gövdesi, düşman gövdesinin kenarlardan içeri çekilmiş hâliyle kesişiyor mu? */
+function overlapsInside(p: Body, e: Body, inset: { x: number; top: number }) {
+  return (
+    p.right > e.left + inset.x &&
+    p.left < e.right - inset.x &&
+    p.bottom > e.top + inset.top &&
+    p.top < e.bottom
+  );
 }
